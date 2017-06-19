@@ -18,6 +18,7 @@ class ReactJWPlayer extends Component {
       adHasPlayed: false,
       hasPlayed: false,
       hasFired: {},
+      player: null,
     };
     this.eventHandlers = createEventHandlers(this);
     this.uniqueScriptId = 'jw-player-script';
@@ -43,12 +44,35 @@ class ReactJWPlayer extends Component {
       existingScript.onload = getCurriedOnLoad(existingScript, this._initialize);
     }
   }
+  componentWillReceiveProps(nextProps){
+    if (nextProps.file === this.props.file) {
+      return;
+    }
+
+    // remove and create new player
+    let { player } = this.state;
+    player.remove();
+    player = window.jwplayer(nextProps.playerId);
+
+    const component = this;
+    const playerOpts = getPlayerOpts(nextProps);
+
+    initialize({ component, player, playerOpts });
+    this.setState({player});
+  }
+  componentWillUnmount() {
+    const { player } = this.state;
+    if (player) {
+      player.remove()
+    }
+  }
   _initialize() {
     const component = this;
     const player = window.jwplayer(this.props.playerId);
     const playerOpts = getPlayerOpts(this.props);
 
     initialize({ component, player, playerOpts });
+    this.setState({player});
   }
   render() {
     return (
