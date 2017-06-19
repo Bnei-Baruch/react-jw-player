@@ -44,7 +44,7 @@ class ReactJWPlayer extends Component {
       existingScript.onload = getCurriedOnLoad(existingScript, this._initialize);
     }
   }
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     if (nextProps.file === this.props.file) {
       return;
     }
@@ -58,12 +58,12 @@ class ReactJWPlayer extends Component {
     const playerOpts = getPlayerOpts(nextProps);
 
     initialize({ component, player, playerOpts });
-    this.setState({player});
+    this.setState({ player });
   }
   componentWillUnmount() {
     const { player } = this.state;
     if (player) {
-      player.remove()
+      player.remove();
     }
   }
   _initialize() {
@@ -72,7 +72,7 @@ class ReactJWPlayer extends Component {
     const playerOpts = getPlayerOpts(this.props);
 
     initialize({ component, player, playerOpts });
-    this.setState({player});
+    this.setState({ player });
   }
   render() {
     return (
