@@ -57,6 +57,10 @@ class ReactJWPlayer extends Component {
     const component = this;
     const playerOpts = getPlayerOpts(nextProps);
 
+    if (this.state.hasPlayed) {
+      playerOpts.autostart = true;
+    }
+
     initialize({ component, player, playerOpts });
     this.setState({ player });
   }
