@@ -106,6 +106,10 @@ var ReactJWPlayer = function (_Component) {
       var component = this;
       var playerOpts = (0, _getPlayerOpts2.default)(nextProps);
 
+      if (this.state.hasPlayed) {
+        playerOpts.autostart = true;
+      }
+
       (0, _initialize3.default)({ component: component, player: player, playerOpts: playerOpts });
       this.setState({ player: player });
     }
