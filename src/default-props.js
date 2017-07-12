@@ -27,6 +27,7 @@ const defaultProps = {
   onFiftyPercent: noOp,
   onNinetyFivePercent: noOp,
   playlist: '',
+  playItem: 0,
 };
 
 export default defaultProps;
