@@ -51,7 +51,9 @@ class ReactJWPlayer extends Component {
 
     // remove and create new player
     let { player } = this.state;
-    player.remove();
+    if (player) {
+        player.remove();
+    }
     player = window.jwplayer(nextProps.playerId);
 
     const component = this;
