@@ -45,7 +45,17 @@ class ReactJWPlayer extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.file === this.props.file) {
+    // remove and create new player
+    let { player } = this.state;
+
+    if (nextProps.file === this.props.file && JSON.stringify(nextProps.playlist) === JSON.stringify(this.props.playlist)) {
+      console.log('Things did not change!');
+
+      if (nextProps.playItem !== undefined && nextProps.playItem !== this.props.playItem) {
+          console.log('Update playItem', nextProps.playItem);
+          player.playlistItem(nextProps.playItem);
+      }
+
       return;
     }
 
@@ -64,6 +74,12 @@ class ReactJWPlayer extends Component {
     }
 
     initialize({ component, player, playerOpts });
+
+    if (this.props.playItem !== undefined && this.state.player) {
+        console.log('Update playItem', this.props.playItem);
+        this.state.player.playlistItem(this.props.playItem);
+    }
+
     this.setState({ player });
   }
   componentWillUnmount() {
