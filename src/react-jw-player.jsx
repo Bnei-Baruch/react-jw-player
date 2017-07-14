@@ -60,7 +60,6 @@ class ReactJWPlayer extends Component {
     }
 
     // remove and create new player
-    let { player } = this.state;
     if (player) {
         player.remove();
     }
