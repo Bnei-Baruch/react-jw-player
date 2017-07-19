@@ -34,7 +34,8 @@ const propTypes = {
   onVideoLoad: PropTypes.func,
   playerId: PropTypes.string.isRequired,
   playerScript: PropTypes.string.isRequired,
-  playlist: PropTypes.string,
+  playlist: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  playItem: PropTypes.number,
 };
 
 export default propTypes;
