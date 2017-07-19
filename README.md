@@ -103,6 +103,9 @@ These are props that modify the basic behavior of the component.
 * `image`
   * URL to a poster image to display before playback starts
   * Type: `string`
+* `licenseKey`
+  * License Key as supplied in the jwplayer dashboard, under: Players > Tools > Downloads > JW Player X (Self-Hosted)
+  * Type: `string`
 
 ## Optional Advertising Event Hook Props
 * `onAdPause(event)`
@@ -211,8 +214,20 @@ These are props that modify the basic behavior of the component.
   * Arguments:
     * `event`
       * This is the event object passed back from JW Player itself.
+* `onTwentyFivePercent(event)`
+  * A function that is run when the playhead reaches passed the 25% mark.
+  * Type: `function`
+  * Arguments:
+    * `event`
+      * This is the event object passed back from JW Player itself.
 * `onFiftyPercent(event)`
   * A function that is run when the playhead reaches passed the 50% mark.
+  * Type: `function`
+  * Arguments:
+    * `event`
+      * This is the event object passed back from JW Player itself.
+* `onSeventyFivePercent(event)`
+  * A function that is run when the playhead reaches passed the 75% mark.
   * Type: `function`
   * Arguments:
     * `event`
@@ -233,13 +248,15 @@ These are props that modify the basic behavior of the component.
 ## Example Container Component
 ``` javascript
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ReactJWPlayer from 'react-jw-player';
 
 const displayName = 'ReactJWPlayerContainer';
 
 const propTypes = {
-  playlist: React.PropTypes.string.isRequired,
-  playerScript: React.PropTypes.string.isRequired
+  playlist: PropTypes.string.isRequired,
+  playerScript: PropTypes.string.isRequired
 };
 
 class ReactJWPlayerContainer extends React.Component {
@@ -268,8 +285,9 @@ class ReactJWPlayerContainer extends React.Component {
     return (
       <div className='react-jw-player-container'>
         <h1>{ this.state.videoTitle }</h1>
-        <JWPlayer
+        <ReactJWPlayer
           playlist={this.props.playlist}
+          licenseKey='your-license-key'
           onAdPlay={this.onAdPlay}
           onVideoLoad={this.onVideoLoad}
           playerId={this.playerId} // bring in the randomly generated playerId
