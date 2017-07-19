@@ -29,9 +29,12 @@ var defaultProps = {
   onThreeSeconds: noOp,
   onTenSeconds: noOp,
   onThirtySeconds: noOp,
+  onTwentyFivePercent: noOp,
   onFiftyPercent: noOp,
+  onSeventyFivePercent: noOp,
   onNinetyFivePercent: noOp,
-  playlist: ''
+  playlist: '',
+  playItem: 0
 };
 
 exports.default = defaultProps;

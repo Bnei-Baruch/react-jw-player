@@ -93,14 +93,22 @@ var ReactJWPlayer = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.file === this.props.file) {
+      // remove and create new player
+      var player = this.state.player;
+
+
+      if (nextProps.file === this.props.file && JSON.stringify(nextProps.playlist) === JSON.stringify(this.props.playlist)) {
+        if (nextProps.playItem !== undefined && nextProps.playItem !== this.props.playItem) {
+          player.playlistItem(nextProps.playItem);
+        }
+
         return;
       }
 
       // remove and create new player
-      var player = this.state.player;
-
-      player.remove();
+      if (player) {
+        player.remove();
+      }
       player = window.jwplayer(nextProps.playerId);
 
       var component = this;
@@ -111,6 +119,11 @@ var ReactJWPlayer = function (_Component) {
       }
 
       (0, _initialize3.default)({ component: component, player: player, playerOpts: playerOpts });
+
+      if (this.props.playItem !== undefined && this.state.player) {
+        this.state.player.playlistItem(this.props.playItem);
+      }
+
       this.setState({ player: player });
     }
   }, {
