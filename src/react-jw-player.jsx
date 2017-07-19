@@ -14,16 +14,17 @@ const displayName = 'ReactJWPlayer';
 class ReactJWPlayer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state          = {
       adHasPlayed: false,
       hasPlayed: false,
       hasFired: {},
       player: null,
     };
-    this.eventHandlers = createEventHandlers(this);
+    this.eventHandlers  = createEventHandlers(this);
     this.uniqueScriptId = 'jw-player-script';
-    this._initialize = this._initialize.bind(this);
+    this._initialize    = this._initialize.bind(this);
   }
+
   componentDidMount() {
     const isJWPlayerScriptLoaded = !!window.jwplayer;
     if (isJWPlayerScriptLoaded) {
@@ -44,16 +45,14 @@ class ReactJWPlayer extends Component {
       existingScript.onload = getCurriedOnLoad(existingScript, this._initialize);
     }
   }
+
   componentWillReceiveProps(nextProps) {
     // remove and create new player
     let { player } = this.state;
 
     if (nextProps.file === this.props.file && JSON.stringify(nextProps.playlist) === JSON.stringify(this.props.playlist)) {
-      console.log('Things did not change!');
-
       if (nextProps.playItem !== undefined && nextProps.playItem !== this.props.playItem) {
-          console.log('Update playItem', nextProps.playItem);
-          player.playlistItem(nextProps.playItem);
+        player.playlistItem(nextProps.playItem);
       }
 
       return;
@@ -61,11 +60,11 @@ class ReactJWPlayer extends Component {
 
     // remove and create new player
     if (player) {
-        player.remove();
+      player.remove();
     }
     player = window.jwplayer(nextProps.playerId);
 
-    const component = this;
+    const component  = this;
     const playerOpts = getPlayerOpts(nextProps);
 
     if (this.state.hasPlayed) {
@@ -75,26 +74,28 @@ class ReactJWPlayer extends Component {
     initialize({ component, player, playerOpts });
 
     if (this.props.playItem !== undefined && this.state.player) {
-        console.log('Update playItem', this.props.playItem);
-        this.state.player.playlistItem(this.props.playItem);
+      this.state.player.playlistItem(this.props.playItem);
     }
 
     this.setState({ player });
   }
+
   componentWillUnmount() {
     const { player } = this.state;
     if (player) {
       player.remove();
     }
   }
+
   _initialize() {
-    const component = this;
-    const player = window.jwplayer(this.props.playerId);
+    const component  = this;
+    const player     = window.jwplayer(this.props.playerId);
     const playerOpts = getPlayerOpts(this.props);
 
     initialize({ component, player, playerOpts });
     this.setState({ player });
   }
+
   render() {
     return (
       <div className={this.props.className} id={this.props.playerId} />
@@ -103,6 +104,6 @@ class ReactJWPlayer extends Component {
 }
 
 ReactJWPlayer.defaultProps = defaultProps;
-ReactJWPlayer.displayName = displayName;
-ReactJWPlayer.propTypes = propTypes;
+ReactJWPlayer.displayName  = displayName;
+ReactJWPlayer.propTypes    = propTypes;
 export default ReactJWPlayer;
